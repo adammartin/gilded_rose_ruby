@@ -1,6 +1,13 @@
 require "gilded_rose"
 
 describe GildedRose do
+  before(:each) do
+    @back_stage_pass_name = "Backstage passes to a TAFKAL80ETC concert"
+    @aged_brie_name = "Aged Brie"
+    @vest_name = "+5 Dexterity Vest"
+    @sulfuras_name = "Sulfuras, Hand of Ragnaros"
+  end
+
   describe "Original Characterization Tests:\n" do
     describe "Introduction description of the system:\n" do
       it "Should have items that have a sell by date" do
@@ -21,7 +28,7 @@ describe GildedRose do
       	original_quality = {}
       	subject.items.each{|item| original_quality.store(item.name, item.quality) }
       	subject.update_quality
-      	subject.items.each{|item| if item.name != "Aged Brie"
+      	subject.items.each{|item| if item.name != @aged_brie_name
       								item.sell_in.should < original_quality[item.name]
       							  end }
       end
@@ -37,20 +44,20 @@ describe GildedRose do
         describe "for normal objects quality degrades at double the standard rate" do
           before(:each) do
             (0..8).each{ subject.update_quality }
-            @dextrity_vest = item_with_name("+5 Dexterity Vest")
+            @dextrity_vest = item_with_name(@vest_name)
             @dextrity_vest.sell_in == 0
             @quality_at_zero = @dextrity_vest.quality
             @amount_to_decrease_by_below_zero = 2
           end
           it "should decrease the value by 2 for one night" do
             subject.update_quality
-            current_quality = item_with_name("+5 Dexterity Vest").quality
+            current_quality = item_with_name(@vest_name).quality
             current_quality == @quality_at_zero - @amount_to_decrease_by_below_zero
           end
           it "should decrease the value by 4 for two night" do
             subject.update_quality
             subject.update_quality
-            current_quality = item_with_name("+5 Dexterity Vest").quality
+            current_quality = item_with_name(@vest_name).quality
             current_quality == @quality_at_zero - (@amount_to_decrease_by_below_zero * 2)
           end
         end
@@ -62,20 +69,20 @@ describe GildedRose do
 
         describe "Aged Brie increases in value with age" do
           before(:each) do
-            @aged_brie = item_with_name("Aged Brie")
+            @aged_brie = item_with_name(@aged_brie_name)
             @original_quality = @aged_brie.quality
           end
 
           it "increases in quality by 1 on first day" do
             subject.update_quality
-            current_quality = item_with_name("Aged Brie").quality
+            current_quality = item_with_name(@aged_brie_name).quality
             current_quality.should == @original_quality + 1
           end
 
           it "increases in quality to 2 on the second day" do
             subject.update_quality
             subject.update_quality
-            current_quality = item_with_name("Aged Brie").quality
+            current_quality = item_with_name(@aged_brie_name).quality
             current_quality.should == @original_quality + 2
           end
         end
@@ -83,28 +90,28 @@ describe GildedRose do
         describe "No item can have it's quality increase to over 50" do
           it "should start with no items that have an intiial quality over 50 if not Sulfuras" do
             items = subject.items
-            items.delete_if{|item| item.name == "Sulfuras, Hand of Ragnaros"}
+            items.delete_if{|item| item.name == @sulfuras_name}
             items.each{|item| item.quality.should <= 50 }
           end
 
           it "cannot increase greater then 50 over it's life if not Sulfuras" do
             (0..1000).each{ subject.update_quality }
             items = subject.items
-            items.delete_if{|item| item.name == "Sulfuras, Hand of Ragnaros"}
+            items.delete_if{|item| item.name == @sulfuras_name}
             items.each{|item| item.quality.should <= 50 }
           end
         end
 
         describe "Sulfuras is legendary and" do
           it "never decreases in quality" do
-            original_sulfuras_quality = item_with_name("Sulfuras, Hand of Ragnaros").quality
+            original_sulfuras_quality = item_with_name(@sulfuras_name).quality
             (0..1000).each{ subject.update_quality }
-            original_sulfuras_quality.should == item_with_name("Sulfuras, Hand of Ragnaros").quality
+            original_sulfuras_quality.should == item_with_name(@sulfuras_name).quality
           end
           it "never needs to be sold" do
-            original_sulfuras = item_with_name("Sulfuras, Hand of Ragnaros")
+            original_sulfuras = item_with_name(@sulfuras_name)
             (0..1000).each{ subject.update_quality }
-            original_sulfuras.sell_in.should == item_with_name("Sulfuras, Hand of Ragnaros").sell_in
+            original_sulfuras.sell_in.should == item_with_name(@sulfuras_name).sell_in
           end
         end
 
@@ -117,10 +124,6 @@ describe GildedRose do
           def quality_at days_till_sell_in, for_item
             (1 .. days_till_sell_in).each{ subject.update_quality }
             for_item.quality
-          end
-
-          before(:each) do
-            @back_stage_pass_name = "Backstage passes to a TAFKAL80ETC concert"
           end
 
           it "increases in quality while not 0" do
