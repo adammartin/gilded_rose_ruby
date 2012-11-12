@@ -102,7 +102,7 @@ describe "Inventory" do
     	end
 
    		it "increases in quality by 1 for sell in days greater than 10" do
-	    	inventory = sample_backstage_inventory 12, 0
+	    	inventory = sample_backstage_inventory 11, 0
 
 	    	inventory.age_by_a_day
 
@@ -110,7 +110,7 @@ describe "Inventory" do
    		end
 
    		it "increases in quality by 2 for sell in days between 5 and 10" do
-   			inventory = sample_backstage_inventory 7, 0
+   			inventory = sample_backstage_inventory 6, 0
 
 	    	inventory.age_by_a_day
 
