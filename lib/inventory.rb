@@ -14,11 +14,7 @@ class Inventory
   private
 
   def increase_sell_in
-    for i in 0..(@items.size-1)
-      if (@items[i].name != "Sulfuras, Hand of Ragnaros")
-        @items[i].sell_in = @items[i].sell_in - 1;
-      end
-    end
+    items.each{|item| unless item.name == "Sulfuras, Hand of Ragnaros" then item.sell_in -= 1 end}
   end
 
   def update_quality
