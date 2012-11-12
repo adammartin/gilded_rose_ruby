@@ -19,6 +19,10 @@ class StandardItem
   	@my_item.sell_in
   end
 
+  def item
+  	@my_item
+  end
+
   def age_by_a_day
       if (@my_item.name != "Aged Brie" && @my_item.name != "Backstage passes to a TAFKAL80ETC concert")
         if (@my_item.quality > 0)

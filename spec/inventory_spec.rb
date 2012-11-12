@@ -5,7 +5,7 @@ describe "Inventory" do
 	describe "for standard items" do
    		before(:each) do
    			@items = []
-	    	@items << Item.new("A standard item", 2, 4)
+	    	@items << StandardItem.new(Item.new("A standard item", 2, 4))
 	    	@inventory = Inventory.new(@items)
    		end
 	 	describe "sell by date" do
@@ -52,7 +52,7 @@ describe "Inventory" do
     describe "Aged Brie" do
     	before(:each) do
    			@items = []
-	    	@items << Item.new("Aged Brie", 2, 0)
+	    	@items << StandardItem.new(Item.new("Aged Brie", 2, 0))
 	    	@inventory = Inventory.new(@items)
    		end
 
@@ -74,7 +74,7 @@ describe "Inventory" do
     		@original_sell_in = 100
     		@original_quality = 100
    			@items = []
-	    	@items << Item.new("Sulfuras, Hand of Ragnaros", @original_sell_in, @original_quality)
+	    	@items << StandardItem.new(Item.new("Sulfuras, Hand of Ragnaros", @original_sell_in, @original_quality))
 	    	@inventory = Inventory.new(@items)
    		end
 
@@ -97,7 +97,7 @@ describe "Inventory" do
     	end
     	def sample_backstage_inventory sell_in_days, starting_quality
     		@items = []
-	    	@items << Item.new("Backstage passes to a TAFKAL80ETC concert", sell_in_days, starting_quality)
+	    	@items << StandardItem.new(Item.new("Backstage passes to a TAFKAL80ETC concert", sell_in_days, starting_quality))
 	    	Inventory.new(@items)
     	end
 

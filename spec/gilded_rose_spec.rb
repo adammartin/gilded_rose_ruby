@@ -10,12 +10,14 @@ describe GildedRose do
 
   describe "Original Characterization Tests:\n" do
     describe "Introduction description of the system:\n" do
+
       it "Should have items that have a sell by date" do
-        subject.items.each{| item | item.instance_variable_defined?(:@sell_in).should == true}
+        subject.items.each{| item | item.item.instance_variable_defined?(:@sell_in).should == true}
       end
       it "Should have items that have a quality" do
-        subject.items.each{| item | item.instance_variable_defined?(:@quality).should == true}  	
+        subject.items.each{| item | item.item.instance_variable_defined?(:@quality).should == true}  	
       end
+
       it "Should decrease in sell by date at end of each day till 0" do
       	original_sell_dates = {}
       	subject.items.each{|item| original_sell_dates.store(item.name, item.sell_in) }
