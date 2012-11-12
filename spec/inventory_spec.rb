@@ -42,6 +42,10 @@ describe "Inventory" do
 	   			@inventory.age_by_a_day
 	   			@items[0].quality.should == 0
 	   		end
+	   		it "should never exceed 50" do
+   				(1..51).each{ @inventory.age_by_a_day }
+   				@items[0].quality.should < 51
+	   		end
 	   	end
     end
 
@@ -62,6 +66,21 @@ describe "Inventory" do
    				@inventory.age_by_a_day
    				@items[0].quality.should == 2
    			end
+   		end
+    end
+
+    describe "Sulfuras as a legendary item" do
+    	before(:each) do
+    		@original_sell_in = 100
+   			@items = []
+	    	@items << Item.new("Sulfuras, Hand of Ragnaros", @original_sell_in, 100)
+	    	@inventory = Inventory.new(@items)
+   		end
+
+   		it "never needs to be sold" do
+   			@inventory.age_by_a_day
+   			@items[0].name.should == "Sulfuras, Hand of Ragnaros"
+   			@items[0].sell_in.should == @original_sell_in
    		end
     end
 end
