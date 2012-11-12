@@ -5,7 +5,22 @@ class Inventory
   def initialize new_items
     @items = new_items
   end
-  #violates srp does quality and sell_by
+
+  def age_by_a_day
+    increase_sell_in
+    update_quality
+  end
+
+  private
+
+  def increase_sell_in
+    for i in 0..(@items.size-1)
+      if (@items[i].name != "Sulfuras, Hand of Ragnaros")
+        @items[i].sell_in = @items[i].sell_in - 1;
+      end
+    end
+  end
+
   def update_quality
     for i in 0..(@items.size-1)
       if (@items[i].name != "Aged Brie" && @items[i].name != "Backstage passes to a TAFKAL80ETC concert")
@@ -30,9 +45,6 @@ class Inventory
             end
           end
         end
-      end
-      if (@items[i].name != "Sulfuras, Hand of Ragnaros")
-        @items[i].sell_in = @items[i].sell_in - 1;
       end
       if (@items[i].sell_in < 0)
         if (@items[i].name != "Aged Brie")

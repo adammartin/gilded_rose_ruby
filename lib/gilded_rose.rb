@@ -17,8 +17,8 @@ class GildedRose
     @inventory = Inventory.new(@items)
   end
 
-  def update_quality
-    @inventory.update_quality
+  def age_by_a_day
+    @inventory.age_by_a_day
   end
 
 end

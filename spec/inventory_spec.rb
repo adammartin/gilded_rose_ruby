@@ -10,36 +10,36 @@ describe "Inventory" do
    		end
 	 	describe "sell by date" do
 	   		it "should decrease by 1 on first day" do
-	   			@inventory.update_quality
+	   			@inventory.age_by_a_day
 	   			@items[0].sell_in.should == 1
 	   		end
 	   		it "should decrease by 2 on second day" do
-	   			@inventory.update_quality
-	   			@inventory.update_quality
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
 	   			@items[0].sell_in.should == 0
 	   		end
 	   	end
 	   	describe "quality" do
 	   		it "should decrease by 1 on first day" do
-	   			@inventory.update_quality
+	   			@inventory.age_by_a_day
 	   			@items[0].quality.should == 3
 	   		end
 	   		it "should decrease by 2 on second day" do
-	   			@inventory.update_quality
-	   			@inventory.update_quality
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
 	   			@items[0].quality.should == 2
 	   		end
 	   		it "should decrease by double the standard rate after sell by date is exceeded" do
-	   			@inventory.update_quality
-	   			@inventory.update_quality
-	   			@inventory.update_quality
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
 	   			@items[0].quality.should == 0
 	   		end
 	   		it "should never go negative" do
-	   			@inventory.update_quality
-	   			@inventory.update_quality
-	   			@inventory.update_quality
-	   			@inventory.update_quality
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
+	   			@inventory.age_by_a_day
 	   			@items[0].quality.should == 0
 	   		end
 	   	end
@@ -54,12 +54,12 @@ describe "Inventory" do
 
    		describe "increases in quality with age" do
    			it "by 1 on first day" do
-   				@inventory.update_quality
+   				@inventory.age_by_a_day
    				@items[0].quality.should == 1
    			end
    			it "by 2 on second day" do
-   				@inventory.update_quality
-   				@inventory.update_quality
+   				@inventory.age_by_a_day
+   				@inventory.age_by_a_day
    				@items[0].quality.should == 2
    			end
    		end
