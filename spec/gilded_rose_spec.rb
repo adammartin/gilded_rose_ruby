@@ -143,7 +143,7 @@ describe GildedRose do
             back_stage_pass.quality.should == quality_at_ten + 2
           end
 
-          it "increases in quality by 2 from a sell_in between 5 and 10" do
+          it "increases in quality by 2 from a sell_in between 0 and 5" do
             back_stage_pass = item_with_name(@back_stage_pass_name)
             quality_at_five = quality_at(days_till(5, back_stage_pass), back_stage_pass)
 

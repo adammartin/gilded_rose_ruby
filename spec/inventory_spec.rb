@@ -72,8 +72,9 @@ describe "Inventory" do
     describe "Sulfuras as a legendary item" do
     	before(:each) do
     		@original_sell_in = 100
+    		@original_quality = 100
    			@items = []
-	    	@items << Item.new("Sulfuras, Hand of Ragnaros", @original_sell_in, 100)
+	    	@items << Item.new("Sulfuras, Hand of Ragnaros", @original_sell_in, @original_quality)
 	    	@inventory = Inventory.new(@items)
    		end
 
@@ -82,5 +83,54 @@ describe "Inventory" do
    			@items[0].name.should == "Sulfuras, Hand of Ragnaros"
    			@items[0].sell_in.should == @original_sell_in
    		end
+
+   		it "never decreases in quality" do
+   			@inventory.age_by_a_day
+   			@items[0].name.should == "Sulfuras, Hand of Ragnaros"
+   			@items[0].quality.should == @original_quality
+   		end
     end
+
+    describe "Backstage passes" do
+    	before(:each) do
+    		@items = []
+    	end
+    	def sample_backstage_inventory sell_in_days, starting_quality
+    		@items = []
+	    	@items << Item.new("Backstage passes to a TAFKAL80ETC concert", sell_in_days, starting_quality)
+	    	Inventory.new(@items)
+    	end
+
+   		it "increases in quality by 1 for sell in days greater than 10" do
+	    	inventory = sample_backstage_inventory 12, 0
+
+	    	inventory.age_by_a_day
+
+	    	@items[0].quality.should == 1
+   		end
+
+   		it "increases in quality by 2 for sell in days between 5 and 10" do
+   			inventory = sample_backstage_inventory 7, 0
+
+	    	inventory.age_by_a_day
+
+	    	@items[0].quality.should == 2
+   		end 
+
+   		it "increases in quality by 3 for sel ind ays between 0 and 5" do
+   			inventory = sample_backstage_inventory 1, 0
+
+	    	inventory.age_by_a_day
+
+	    	@items[0].quality.should == 3
+   		end
+
+   		it "drops to 0 when sell_in day is exceed" do
+   			inventory = sample_backstage_inventory 0, 100
+
+	    	inventory.age_by_a_day
+
+	    	@items[0].quality.should == 0
+   		end
+   	end
 end
