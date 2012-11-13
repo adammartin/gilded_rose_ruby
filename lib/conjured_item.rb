@@ -24,7 +24,10 @@ class ConjuredItem
   end
 
   def age_by_a_day
+  	quality_decay_amount = @my_item.sell_in > 0 ? 2 : 4
   	@my_item.sell_in -= 1
-  	((@my_item.quality - 2) >= 0) ? @my_item.quality -= 2 : @my_item.quality == 0
+  	((@my_item.quality - quality_decay_amount) >= 0) ? 
+  				@my_item.quality -= quality_decay_amount : 
+  				@my_item.quality == 0
   end
 end

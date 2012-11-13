@@ -25,8 +25,14 @@ describe "ConjuredItem" do
 			@conjured_item.age_by_a_day
 			@conjured_item.quality.should == 6
 		end
+   		it "should decrease by double the standard rate after sell by date is exceeded" do
+   			@conjured_item = ConjuredItem.new(Item.new("Conjured Mana Cake", 0, 10))
+   			@conjured_item.age_by_a_day
+   			@conjured_item.quality.should == 6
+   		end
 		it "still never goes negative" do
-			(0..6).each{@conjured_item.age_by_a_day}
+   			@conjured_item = ConjuredItem.new(Item.new("Conjured Mana Cake", 0, 0))
+			@conjured_item.age_by_a_day
 			@conjured_item.quality.should == 0
 		end
 	end
