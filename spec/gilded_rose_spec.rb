@@ -163,6 +163,17 @@ describe GildedRose do
             back_stage_pass.quality.should == 0
           end
         end
+
+        describe "Conjured Item" do
+          it "decreases in quality by double the standard rate" do
+            conjured_item = item_with_name("Conjured Mana Cake")
+            quality_initially = conjured_item.quality
+
+            subject.age_by_a_day
+
+            conjured_item.quality.should == (quality_initially - 2)
+          end
+        end
       end
     end
   end

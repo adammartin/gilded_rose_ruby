@@ -1,4 +1,5 @@
 require 'item'
+require 'conjured_item'
 require 'standard_item'
 require 'inventory'
 
@@ -19,7 +20,13 @@ class GildedRose
     @items << Item.new("Sulfuras, Hand of Ragnaros", 0, 80)
     @items << Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20)
     @items << Item.new("Conjured Mana Cake", 3, 6)
-    @inventory = Inventory.new(@items.collect{|an_item| StandardItem.new(an_item)})
+    @inventory = Inventory.new(@items.collect{|an_item| 
+                                    if an_item.name == "Conjured Mana Cake" then 
+                                      ConjuredItem.new(an_item)
+                                    else
+                                      StandardItem.new(an_item)
+                                    end
+                                  })
   end
 
   def age_by_a_day

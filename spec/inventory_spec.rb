@@ -3,11 +3,11 @@ require "inventory"
 describe "Inventory" do
 
 	describe "for standard items" do
-   		before(:each) do
-   			@items = []
-	    	@items << StandardItem.new(Item.new("A standard item", 2, 4))
-	    	@inventory = Inventory.new(@items)
-   		end
+ 		before(:each) do
+ 			@items = []
+    	@items << StandardItem.new(Item.new("A standard item", 2, 4))
+    	@inventory = Inventory.new(@items)
+ 		end
 	 	describe "sell by date" do
 	   		it "should decrease by 1 on first day" do
 	   			@inventory.age_by_a_day
