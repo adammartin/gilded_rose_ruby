@@ -19,10 +19,6 @@ describe "BackstagePass" do
 			@backstage_pass.age_by_a_day
 			@backstage_pass.sell_in.should == 3
 		end
-		it "should never have a sell_in day below 0" do
-			(1..10).each{ @backstage_pass.age_by_a_day }
-			@backstage_pass.sell_in.should == 0
-		end
 	   it "should never go negative quality" do
          (1..51).each{ @backstage_pass.age_by_a_day }
 			@backstage_pass.quality.should >= 0

@@ -14,10 +14,6 @@ describe "ConjuredItem" do
    			@conjured_item.age_by_a_day
    			@conjured_item.sell_in.should == 3
    		end
-   		it "should never have a sell_in day below 0" do
-			(1..10).each{ @conjured_item.age_by_a_day }
-			@conjured_item.sell_in.should == 0
-   		end
 	end
 	describe "quality decreases at twice the rate" do
 		it "reducing quality by 2 on first day" do

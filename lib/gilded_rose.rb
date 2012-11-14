@@ -4,7 +4,6 @@ require 'conjured_item'
 require 'standard_item'
 require 'legendary_item'
 require 'backstage_pass'
-require 'inventory'
 
 class GildedRose
 
@@ -24,7 +23,7 @@ class GildedRose
     @items << Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20)
     @items << Item.new("Conjured Mana Cake", 3, 6)
 
-    @inventory = Inventory.new(@items.collect{|an_item| 
+    @inventory = @items.collect{|an_item| 
                                     case an_item.name
                                     when "Conjured Mana Cake" 
                                       ConjuredItem.new(an_item)
@@ -37,11 +36,11 @@ class GildedRose
                                     else
                                       StandardItem.new(an_item)
                                     end
-                                  })
+                                }
   end
 
   def age_by_a_day
-    @inventory.age_by_a_day
+    @inventory.each {|an_item| an_item.age_by_a_day}
   end
 
 end
