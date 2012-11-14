@@ -23,24 +23,28 @@ class GildedRose
     @items << Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20)
     @items << Item.new("Conjured Mana Cake", 3, 6)
 
-    @inventory = @items.collect{|an_item| 
-                                    case an_item.name
-                                    when "Conjured Mana Cake" 
-                                      ConjuredItem.new(an_item)
-                                    when "Sulfuras, Hand of Ragnaros"
-                                      LegendaryItem.new(an_item)
-                                    when "Aged Brie"
-                                      AgedBrie.new(an_item)
-                                    when "Backstage passes to a TAFKAL80ETC concert"
-                                      BackstagePass.new(an_item)
-                                    else
-                                      StandardItem.new(an_item)
-                                    end
-                                }
+    @inventory = @items.collect{|an_item| decorate_item an_item }
   end
 
   def age_by_a_day
     @inventory.each {|an_item| an_item.age_by_a_day}
+  end
+
+  private
+
+  def decorate_item an_item
+    case an_item.name
+      when "Conjured Mana Cake" 
+        ConjuredItem.new(an_item)
+      when "Sulfuras, Hand of Ragnaros"
+        LegendaryItem.new(an_item)
+      when "Aged Brie"
+        AgedBrie.new(an_item)
+      when "Backstage passes to a TAFKAL80ETC concert"
+        BackstagePass.new(an_item)
+      else
+        StandardItem.new(an_item)
+    end
   end
 
 end
