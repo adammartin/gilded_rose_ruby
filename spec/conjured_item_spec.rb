@@ -4,15 +4,19 @@ describe "ConjuredItem" do
 	before(:each) do
 		@conjured_item = ConjuredItem.new(Item.new("Conjured Mana Cake", 5, 10))
 	end
-	describe "like a standard item" do
+	describe "like a standard item sell in" do
    		it "should decrease by 1 on first day" do
    			@conjured_item.age_by_a_day
    			@conjured_item.sell_in.should == 4
    		end
-   		it "should decrease by 2 on second day" do
+   		it "should decrease by 2 on second day sell in" do
    			@conjured_item.age_by_a_day
    			@conjured_item.age_by_a_day
    			@conjured_item.sell_in.should == 3
+   		end
+   		it "should never have a sell_in day below 0" do
+			(1..10).each{ @conjured_item.age_by_a_day }
+			@conjured_item.sell_in.should == 0
    		end
 	end
 	describe "quality decreases at twice the rate" do

@@ -1,6 +1,9 @@
 require 'item'
+require 'aged_brie'
 require 'conjured_item'
 require 'standard_item'
+require 'legendary_item'
+require 'backstage_pass'
 require 'inventory'
 
 class GildedRose
@@ -22,8 +25,15 @@ class GildedRose
     @items << Item.new("Conjured Mana Cake", 3, 6)
 
     @inventory = Inventory.new(@items.collect{|an_item| 
-                                    if an_item.name == "Conjured Mana Cake" then 
+                                    case an_item.name
+                                    when "Conjured Mana Cake" 
                                       ConjuredItem.new(an_item)
+                                    when "Sulfuras, Hand of Ragnaros"
+                                      LegendaryItem.new(an_item)
+                                    when "Aged Brie"
+                                      AgedBrie.new(an_item)
+                                    when "Backstage passes to a TAFKAL80ETC concert"
+                                      BackstagePass.new(an_item)
                                     else
                                       StandardItem.new(an_item)
                                     end
